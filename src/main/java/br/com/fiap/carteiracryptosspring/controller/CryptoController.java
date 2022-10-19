@@ -12,33 +12,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.carteiracryptosspring.model.Crypto;
-import br.com.fiap.carteiracryptosspring.repository.CryptoRepository;
+import br.com.fiap.carteiracryptosspring.service.CryptoService;
 
 @RestController
-@RequestMapping("/cryptos")
+@RequestMapping("")
 public class CryptoController {
    
    @Autowired
-   CryptoRepository repository;
+   CryptoService service;
 
    @GetMapping
    public List<Crypto> getCryptos() {
-      return repository.findAll();
+      return service.getCryptos();
    }
 
-   @GetMapping("/{codigo}")
+   @GetMapping("/crypto/{codigo}")
    public Crypto getCryptosById(@PathVariable String codigo) {
-      return repository.findById(codigo).orElse(null);
+      return service.getCryptosById(codigo);
    }
 
-   @PostMapping("/insere")
+   @PostMapping("/crypto")
    public Crypto insertCryptos(@RequestBody Crypto crypto) {
-      return repository.save(crypto);
+      return service.insertCryptos(crypto);
    }
 
-   @DeleteMapping("/{codigo}")
+   @DeleteMapping("/crypto/{codigo}")
    public void deleteCryptos(@PathVariable String codigo) {
-      repository.deleteById(codigo);
+      service.deleteCrypto(codigo);
    }
    
 }

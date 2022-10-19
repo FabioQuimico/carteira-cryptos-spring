@@ -1,5 +1,7 @@
 package br.com.fiap.carteiracryptosspring.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,7 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity(name = "clientes")
-public class Cliente {
+public class Cliente implements Serializable {
+
+   private static final long serialVersionUID = 1L;
    
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,18 +19,14 @@ public class Cliente {
    
    @Column(name = "nome", nullable = false)
    private String nome;
-   @Column(name = "email", nullable = false)
-   private String email;
 
    public Cliente(){};
-   public Cliente(String nome, String email) {
+   public Cliente(String nome) {
       this.nome = nome;
-      this.email = email;
    }
-   public Cliente(Long id, String nome, String email){
+   public Cliente(Long id, String nome){
       this.id = id;
       this.nome = nome;
-      this.email = email;
    }
    public void setID(Long id) {
       this.id = id;
@@ -40,11 +40,4 @@ public class Cliente {
    public String getNome() {
       return nome;
    }
-   public void setEmail(String email) {
-      this.email = email;
-   }
-   public String getEmail() {
-      return email;
-   }
-
 }

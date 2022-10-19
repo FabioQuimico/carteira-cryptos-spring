@@ -31,6 +31,5 @@ public class CryptoCliente implements Serializable{
       this.crypto = crypto;
       this.quantidade = quantidade;
    }
-
    
 }
