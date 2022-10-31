@@ -15,9 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.carteiracryptosspring.model.Cliente;
 import br.com.fiap.carteiracryptosspring.service.ClienteService;
+import lombok.AllArgsConstructor;
 
 @RestController
-//@AllArgsConstructor
+@AllArgsConstructor
 @RequestMapping("/clientes")
 public class ClienteController {
 

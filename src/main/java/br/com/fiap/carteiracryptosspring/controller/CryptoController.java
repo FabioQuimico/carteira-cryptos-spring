@@ -21,7 +21,7 @@ public class CryptoController {
    @Autowired
    CryptoService service;
 
-   @GetMapping
+   @GetMapping("cryptos")
    public List<Crypto> getCryptos() {
       return service.getCryptos();
    }

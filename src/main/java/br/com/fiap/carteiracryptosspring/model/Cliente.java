@@ -31,4 +31,7 @@ public class Cliente implements Serializable {
    
    @Column(name = "nome", nullable = false)
    private String nome;
+
+   @OneToMany (mappedBy = "cliente")
+   private List<CryptoCliente> cryptos;
 }
