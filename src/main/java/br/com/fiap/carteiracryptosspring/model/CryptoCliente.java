@@ -19,23 +19,22 @@ import lombok.Data;
 
 @Entity
 @Table(name = "crypto_cliente")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+ @Data
+// @NoArgsConstructor
+// @AllArgsConstructor
 public class CryptoCliente {
    
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
 
-	// @ManyToOne(optional=false,cascade=CascadeType.DETACH)
-   // @JoinColumn(name = "idCliente", referencedColumnName = "id", nullable = false)
-   // Cliente cliente;
+	@ManyToOne(optional=false)
+   @JoinColumn(name = "idCliente", referencedColumnName = "id", nullable = false)
+   Cliente cliente;
    
    @ManyToOne(optional=false)
    @JoinColumn(name = "codigoCrypto", referencedColumnName = "codigo", nullable = false)
    Crypto crypto;
-   //String codigoCrypto;
 
    BigDecimal quantidade;
 }

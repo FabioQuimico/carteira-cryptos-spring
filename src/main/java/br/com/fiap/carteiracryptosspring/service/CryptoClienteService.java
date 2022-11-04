@@ -1,9 +1,6 @@
 package br.com.fiap.carteiracryptosspring.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import br.com.fiap.carteiracryptosspring.model.CryptoCliente;

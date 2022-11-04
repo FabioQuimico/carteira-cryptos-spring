@@ -35,7 +35,14 @@ public class Cliente implements Serializable {
    @Column(name = "nome", nullable = false)
    private String nome;
 
-   @OneToMany(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
-   @JoinColumn(name = "id_cliente")
+   @OneToMany(mappedBy = "cliente", fetch=FetchType.EAGER)
    private Set<CryptoCliente> cryptos = new HashSet<CryptoCliente>();
+
+   public CryptoCliente buscaCrypto(String codigo) {
+      for (CryptoCliente crypto : cryptos) {
+         if (crypto.getCrypto().getCodigo().equalsIgnoreCase(codigo))
+            return crypto;
+      }
+      return null;
+   }
 }
