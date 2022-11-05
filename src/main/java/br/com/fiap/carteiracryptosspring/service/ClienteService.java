@@ -1,6 +1,6 @@
 package br.com.fiap.carteiracryptosspring.service;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +8,15 @@ import org.springframework.stereotype.Service;
 
 import br.com.fiap.carteiracryptosspring.dto.CryptoClienteDTO;
 import br.com.fiap.carteiracryptosspring.model.Cliente;
+import br.com.fiap.carteiracryptosspring.model.Crypto;
 import br.com.fiap.carteiracryptosspring.model.CryptoCliente;
 import br.com.fiap.carteiracryptosspring.repository.ClienteRepository;
 
 @Service
-public class ClienteService {
-   
+public class ClienteService implements Serializable {
+
+   private static final long serialVersionUID = 1L;
+
    @Autowired
    ClienteRepository repository;
    @Autowired
@@ -42,11 +45,9 @@ public class ClienteService {
       return repository.save(cliente);
    }
 
-   public CryptoCliente compraCrypto(Long idCliente, CryptoClienteDTO compra) {
+   public CryptoCliente compraCrypto(Long idCliente, CryptoClienteDTO compra) throws Exception {
 
       Cliente cliente = repository.findById(idCliente).get();
-
-      System.out.println(cliente.buscaCrypto(compra.getCodigo()));
 
       CryptoCliente cryptoPossuida = cliente.buscaCrypto(compra.getCodigo());
       if (cryptoPossuida != null) {
@@ -57,10 +58,44 @@ public class ClienteService {
          System.out.println(" *** O CLIENTE NÃO POSSUIA ESSA CRYPTO ***");
          CryptoCliente cryptoCliente = new CryptoCliente();
          cryptoCliente.setCliente(cliente);
-         cryptoCliente.setCrypto(cService.getCryptosById(compra.getCodigo()));
-         cryptoCliente.setQuantidade(compra.getQuantidade());
 
+         // Verifica se a criptomoeda já existe na base
+         Crypto crypto = cService.getCryptosById(compra.getCodigo());
+
+         if (crypto == null) {
+            // TODO: Atualiza base de cryptos
+            System.out.println("*** AGUARDE ATUALIZANDO BASE DE CRIPTOMOEDAS... ***");
+            crypto = cService.getCryptosById(compra.getCodigo());
+            // Tenta novamente com a base atualizada
+            if (crypto == null) {
+               throw new Exception("*** Criptomoeda não existe na base de dados ***");
+            }
+         } else {
+            cryptoCliente.setCrypto(crypto);
+            cryptoCliente.setQuantidade(compra.getQuantidade());
+         }
          return ccService.saveCryptoCliente(cryptoCliente);
       }
+   }
+
+   public CryptoCliente vendeCrypto(Long idCliente, CryptoClienteDTO venda) throws Exception {
+
+      Cliente cliente = repository.findById(idCliente).get();
+      CryptoCliente cryptoPossuida = cliente.buscaCrypto(venda.getCodigo());
+
+      if (cryptoPossuida != null) {
+         if (venda.getQuantidade().compareTo(cryptoPossuida.getQuantidade()) < 0) {
+            cryptoPossuida.setQuantidade(cryptoPossuida.getQuantidade().subtract(venda.getQuantidade()));
+            ccService.saveCryptoCliente(cryptoPossuida);
+         } else if (venda.getQuantidade().compareTo(cryptoPossuida.getQuantidade()) == 0){
+            ccService.deleteCryptoCliente(cryptoPossuida);
+            return null;
+         } else {
+            throw new Exception("Cliente não possui essa quantidade da criptomoeda!");   
+         }
+      } else {
+         throw new Exception("Cliente não possui essa criptomoeda");
+      }
+      return cliente.buscaCrypto(venda.getCodigo());
    }
 }

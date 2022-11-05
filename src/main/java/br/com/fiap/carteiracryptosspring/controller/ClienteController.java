@@ -38,13 +38,13 @@ public class ClienteController {
       return service.getClienteById(id);
    }
 
-   @PostMapping("/insere")
+   @PostMapping
    @ResponseStatus(HttpStatus.CREATED)
    public Cliente addCliente(@RequestBody Cliente cliente) {
       return service.saveCliente(cliente);
    }
 
-   @PutMapping("/altera")
+   @PutMapping
    @ResponseStatus(HttpStatus.ACCEPTED)
    public Cliente alterar(@RequestBody Cliente alterar) {
       return service.alterarCliente(alterar);
@@ -56,8 +56,12 @@ public class ClienteController {
    }
 
    @PostMapping("/{idCliente}/compra")
-   public CryptoCliente compraCrypto(@PathVariable Long idCliente, @RequestBody CryptoClienteDTO compra) {
-
+   public CryptoCliente compraCrypto(@PathVariable Long idCliente, @RequestBody CryptoClienteDTO compra) throws Exception {
       return service.compraCrypto(idCliente, compra);
+   }
+
+   @PostMapping("/{idCliente}/venda")
+   public CryptoCliente vendeCrypto(@PathVariable Long idCliente, @RequestBody CryptoClienteDTO venda) throws Exception{
+      return service.vendeCrypto(idCliente, venda);
    }
 }
