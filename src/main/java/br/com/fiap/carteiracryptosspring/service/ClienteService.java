@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.fiap.carteiracryptosspring.dto.CryptoClienteDTO;
+import br.com.fiap.carteiracryptosspring.exceptionhandler.CryptoNotFoundException;
+import br.com.fiap.carteiracryptosspring.exceptionhandler.InsuficientFundsException;
 import br.com.fiap.carteiracryptosspring.model.Cliente;
 import br.com.fiap.carteiracryptosspring.model.Crypto;
 import br.com.fiap.carteiracryptosspring.model.CryptoCliente;
@@ -68,7 +70,7 @@ public class ClienteService implements Serializable {
             crypto = cService.getCryptosById(compra.getCodigo());
             // Tenta novamente com a base atualizada
             if (crypto == null) {
-               throw new Exception("*** Criptomoeda não existe na base de dados ***");
+               throw new CryptoNotFoundException("*** Criptomoeda não existe na base de dados ***");
             }
          } else {
             cryptoCliente.setCrypto(crypto);
@@ -91,10 +93,10 @@ public class ClienteService implements Serializable {
             ccService.deleteCryptoCliente(cryptoPossuida);
             return null;
          } else {
-            throw new Exception("Cliente não possui essa quantidade da criptomoeda!");   
+            throw new InsuficientFundsException("*** Cliente não possui essa quantidade da criptomoeda! ***");   
          }
       } else {
-         throw new Exception("Cliente não possui essa criptomoeda");
+         throw new Exception("*** Cliente não possui essa criptomoeda ***");
       }
       return cliente.buscaCrypto(venda.getCodigo());
    }

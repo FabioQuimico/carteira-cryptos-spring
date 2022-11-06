@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.carteiracryptosspring.dto.CryptoClienteDTO;
+import br.com.fiap.carteiracryptosspring.exceptionhandler.ClienteNotFoundException;
 import br.com.fiap.carteiracryptosspring.model.Cliente;
 import br.com.fiap.carteiracryptosspring.model.CryptoCliente;
 import br.com.fiap.carteiracryptosspring.service.ClienteService;
@@ -35,7 +36,11 @@ public class ClienteController {
    
    @GetMapping("/{id}")
    public Cliente getClienteById(@PathVariable Long id) {
-      return service.getClienteById(id);
+      try {
+         return service.getClienteById(id);
+      } catch (Exception e) {
+         throw new ClienteNotFoundException("Cliente não encontrado em nossa base de dados");
+      }
    }
 
    @PostMapping

@@ -22,7 +22,7 @@ public class CryptoService {
       return repository.findById(codigo).orElse(null);
    }
 
-   public Crypto insertCryptos(Crypto crypto) {
+   public Crypto insertCrypto(Crypto crypto) {
       return repository.save(crypto);
    }
 
