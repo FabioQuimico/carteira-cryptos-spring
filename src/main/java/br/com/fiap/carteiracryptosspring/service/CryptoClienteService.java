@@ -1,5 +1,7 @@
 package br.com.fiap.carteiracryptosspring.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +15,6 @@ public class CryptoClienteService {
 
    @Autowired
    CryptoClienteRepository repository;
-
-   // public List<CryptoCliente> getCryptosCliente(Long idCliente) {
-   //    return repository.listaCryptosCliente(idCliente);
-   // }
 
    public CryptoCliente saveCryptoCliente(CryptoCliente cryptoCliente) {
       return repository.save(cryptoCliente);

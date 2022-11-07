@@ -33,7 +33,7 @@ public class CryptoController {
 
    @PostMapping("/crypto")
    public Crypto insertCryptos(@RequestBody Crypto crypto) {
-      return service.insertCryptos(crypto);
+      return service.insertCrypto(crypto);
    }
 
    @DeleteMapping("/crypto/{codigo}")

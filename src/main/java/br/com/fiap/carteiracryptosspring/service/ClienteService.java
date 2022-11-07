@@ -2,6 +2,7 @@ package br.com.fiap.carteiracryptosspring.service;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,11 @@ public class ClienteService implements Serializable {
 
    public Cliente alterarCliente(Cliente cliente) {
       return repository.save(cliente);
+   }
+
+   public Set<CryptoCliente> getCryptosCliente(Long idCliente){
+      Cliente cliente = repository.findById(idCliente).get();
+      return cliente.getCryptos();
    }
 
    public CryptoCliente compraCrypto(Long idCliente, CryptoClienteDTO compra) throws Exception {

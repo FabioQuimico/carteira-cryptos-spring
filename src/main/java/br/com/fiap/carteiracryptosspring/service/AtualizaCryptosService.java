@@ -1,8 +1,5 @@
 package br.com.fiap.carteiracryptosspring.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -29,6 +26,8 @@ public class AtualizaCryptosService {
             Crypto crypto = new Crypto();
             crypto.setCodigo(cryptoDTO.getCodigo());
             crypto.setNome(cryptoDTO.getNome());
+            crypto.setValorCompra(cryptoDTO.getCaotacao_venda());
+            crypto.setValorVenda(cryptoDTO.getCaotacao_venda());
             service.insertCrypto(crypto);
             // cryptos.add(crypto);
 

@@ -17,6 +17,9 @@ public class Crypto {
    
    @Id
    private String codigo;
+
    private String nome;
+   private Double valorCompra;
+   private Double valorVenda;
 
 }
