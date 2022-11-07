@@ -15,7 +15,7 @@ public class CryptoDTO {
    String nome;
    String descricao;
    double cotacao_compra;
-   double caotacao_venda;
+   double cotacao_venda;
    double variacao;
    Timestamp timestamp_atualizacao;
 }

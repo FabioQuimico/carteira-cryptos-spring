@@ -1,6 +1,8 @@
 package br.com.fiap.carteiracryptosspring.controller;
 
 import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +19,7 @@ import br.com.fiap.carteiracryptosspring.dto.CryptoClienteDTO;
 import br.com.fiap.carteiracryptosspring.exceptionhandler.ClienteNotFoundException;
 import br.com.fiap.carteiracryptosspring.model.Cliente;
 import br.com.fiap.carteiracryptosspring.model.CryptoCliente;
+import br.com.fiap.carteiracryptosspring.service.AtualizaCryptosService;
 import br.com.fiap.carteiracryptosspring.service.ClienteService;
 import lombok.AllArgsConstructor;
 
@@ -27,6 +30,8 @@ public class ClienteController {
 
    @Autowired
    ClienteService service;
+   @Autowired
+   AtualizaCryptosService aService;
    
    @GetMapping("/lista")
    public List<Cliente> getClienteList() {
@@ -36,6 +41,7 @@ public class ClienteController {
    @GetMapping("/{id}")
    public Cliente getClienteById(@PathVariable Long id) {
       try {
+         aService.atualizaCryptos();
          return service.getClienteById(id);
       } catch (Exception e) {
          throw new ClienteNotFoundException("Cliente não encontrado em nossa base de dados");
@@ -67,5 +73,10 @@ public class ClienteController {
    @PostMapping("/{idCliente}/venda")
    public CryptoCliente vendeCrypto(@PathVariable Long idCliente, @RequestBody CryptoClienteDTO venda) throws Exception{
       return service.vendeCrypto(idCliente, venda);
+   }
+
+   @GetMapping("/{idCliente}/cryptos")
+   public Set<CryptoCliente> listaCryptos(@PathVariable Long idCliente) {
+      return service.getCryptosCliente(idCliente);
    }
 }

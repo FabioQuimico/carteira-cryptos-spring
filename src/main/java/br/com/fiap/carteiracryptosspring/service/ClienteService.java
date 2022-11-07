@@ -1,6 +1,7 @@
 package br.com.fiap.carteiracryptosspring.service;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
@@ -26,6 +27,8 @@ public class ClienteService implements Serializable {
    CryptoClienteService ccService;
    @Autowired
    CryptoService cService;
+   @Autowired
+   AtualizaCryptosService aService;
 
    public List<Cliente> getClienteList() {
       return repository.findAll();
@@ -71,7 +74,7 @@ public class ClienteService implements Serializable {
          Crypto crypto = cService.getCryptosById(compra.getCodigo());
 
          if (crypto == null) {
-            // TODO: Atualiza base de cryptos
+            aService.atualizaCryptos();
             System.out.println("*** AGUARDE ATUALIZANDO BASE DE CRIPTOMOEDAS... ***");
             crypto = cService.getCryptosById(compra.getCodigo());
             // Tenta novamente com a base atualizada
@@ -92,12 +95,13 @@ public class ClienteService implements Serializable {
       CryptoCliente cryptoPossuida = cliente.buscaCrypto(venda.getCodigo());
 
       if (cryptoPossuida != null) {
-         if (venda.getQuantidade().compareTo(cryptoPossuida.getQuantidade()) < 0) {
+         if (venda.getQuantidade().compareTo(cryptoPossuida.getQuantidade()) <= 0) {
             cryptoPossuida.setQuantidade(cryptoPossuida.getQuantidade().subtract(venda.getQuantidade()));
             ccService.saveCryptoCliente(cryptoPossuida);
-         } else if (venda.getQuantidade().compareTo(cryptoPossuida.getQuantidade()) == 0){
-            ccService.deleteCryptoCliente(cryptoPossuida);
-            return null;
+            if (cryptoPossuida.getQuantidade().compareTo(BigDecimal.ZERO) == 0){
+               System.out.println("*** TENTANDO APAGAR A CRIPTO DO CLIENTE ***");
+               ccService.deleteCryptoCliente(cryptoPossuida);
+            }
          } else {
             throw new InsuficientFundsException("*** Cliente não possui essa quantidade da criptomoeda! ***");   
          }

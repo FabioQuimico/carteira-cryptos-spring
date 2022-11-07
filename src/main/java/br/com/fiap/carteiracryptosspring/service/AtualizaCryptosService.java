@@ -26,8 +26,8 @@ public class AtualizaCryptosService {
             Crypto crypto = new Crypto();
             crypto.setCodigo(cryptoDTO.getCodigo());
             crypto.setNome(cryptoDTO.getNome());
-            crypto.setValorCompra(cryptoDTO.getCaotacao_venda());
-            crypto.setValorVenda(cryptoDTO.getCaotacao_venda());
+            crypto.setValorCompra(cryptoDTO.getCotacao_venda());
+            crypto.setValorVenda(cryptoDTO.getCotacao_venda());
             service.insertCrypto(crypto);
             // cryptos.add(crypto);
 
