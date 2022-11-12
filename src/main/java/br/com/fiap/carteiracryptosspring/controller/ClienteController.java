@@ -40,8 +40,13 @@ public class ClienteController {
    
    @GetMapping("/{id}")
    public Cliente getClienteById(@PathVariable Long id) {
+
       try {
          aService.atualizaCryptos();
+      } catch (Exception e) {
+         System.out.println("*** NÃO FOI POSSIVEL ATUALIZAR A BASE, USANDO DADOS LOCAIS ***");
+      }
+      try {
          return service.getClienteById(id);
       } catch (Exception e) {
          throw new ClienteNotFoundException("Cliente não encontrado em nossa base de dados");

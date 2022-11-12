@@ -74,8 +74,12 @@ public class ClienteService implements Serializable {
          Crypto crypto = cService.getCryptosById(compra.getCodigo());
 
          if (crypto == null) {
-            aService.atualizaCryptos();
-            System.out.println("*** AGUARDE ATUALIZANDO BASE DE CRIPTOMOEDAS... ***");
+            try {
+               aService.atualizaCryptos();
+               System.out.println("*** AGUARDE ATUALIZANDO BASE DE CRIPTOMOEDAS... ***");
+            } catch (Exception e) {
+               System.out.println("*** NÃO FOI POSSIVEL ATUALIZAR A BASE, USANDO DADOS LOCAIS ***");
+            }
             crypto = cService.getCryptosById(compra.getCodigo());
             // Tenta novamente com a base atualizada
             if (crypto == null) {
