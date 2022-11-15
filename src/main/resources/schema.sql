@@ -5,7 +5,7 @@ CREATE TABLE clientes (
    id bigint NOT NULL AUTO_INCREMENT,
    nome varchar(255) NOT NULL,
    PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 4 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 DEFAULT CHARSET = utf8mb4;
 
 CREATE TABLE `cryptos` (
    `codigo` varchar(255) NOT NULL,
@@ -26,6 +26,6 @@ CREATE TABLE `crypto_cliente` (
    KEY `FKd89jnh39hivt1nnobh36vc53p` (`id_cliente`),
    CONSTRAINT `FK1kul24dxqaw1khwovo6v8lo6s` FOREIGN KEY (`codigo_crypto`) REFERENCES `cryptos` (`codigo`),
    CONSTRAINT `FKd89jnh39hivt1nnobh36vc53p` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 3 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 DEFAULT CHARSET = utf8mb4;
 
 
