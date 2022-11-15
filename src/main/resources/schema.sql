@@ -1,4 +1,4 @@
-CREATE DATABASE carteira-cryptos;
+CREATE SCHEMA `carteira-cryptos` DEFAULT CHARACTER SET utf8mb4;
 USE carteira-cryptos;
 
 CREATE TABLE clientes (

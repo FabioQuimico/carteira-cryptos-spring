@@ -11,6 +11,14 @@
 
 ## Execução
 
+IMPORTANTE: Para utilização do microsserviço é preciso rodar a aplicação de atualização da base de dados de cotação de criptomoedas através que está no GITHUB abaixo ou usando o comando docker:
+
+- github.com/AlexDamiao86/trabalho-microservices/tree/main/cotacao-crypto-api
+
+- docker run -d --rm --name=cotacao-crypto -p 5555:5555 docker.io/alexdamiao86/cotacao-crypto-api
+
+Com o serviço acima executando:
+
 mvn clean install
 mvn spring-boot:run
 

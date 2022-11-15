@@ -1,0 +1,12 @@
+version: '3.5'
+services:
+  mysql-standalone:
+    image: meusql-db
+    ports:
+      - "3307:3036"
+    environment:
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: fiap
+      MYSQL_USER: MainUser
+      MYSQL_PASSWORD: MainPassword
