@@ -6,21 +6,32 @@
   - Maven
   - SpringBoot
   - Junit
-- MySQl
+- MySql
 - Docker
 
 ## Execução
 
-IMPORTANTE: Para utilização do microsserviço é preciso rodar a aplicação de atualização da base de dados de cotação de criptomoedas através que está no GITHUB abaixo ou usando o comando docker:
+### PASSO 1: Para utilização do microsserviço é preciso rodar a aplicação de atualização da base de dados de cotação de criptomoedas através de um dos passos abaixo
 
-- github.com/AlexDamiao86/trabalho-microservices/tree/main/cotacao-crypto-api
+#### 1.1 Rodar conforme instruções do readme.md em github.com/AlexDamiao86/trabalho-microservices/tree/main/cotacao-crypto-api
 
-- docker run -d --rm --name=cotacao-crypto -p 5555:5555 docker.io/alexdamiao86/cotacao-crypto-api
+#### 1.2 Rodar container através do comando
 
-Com o serviço acima executando:
+> docker run -d --rm --name=cotacao-crypto -p 5555:5555 docker.io/alexdamiao86/cotacao-crypto-api
 
-mvn clean install
-mvn spring-boot:run
+### PASSO 2: Rodar o banco de dados MySQL a ser uttilizado no microsserviço
+
+#### 2.1 Criar banco de dados local usando os comandos em /mysql/CreateDatabase.sql
+
+#### 2.2 Rodar container de dentro da pasta /mysql/ com os comando
+
+> docker build -t meusql-db .
+> docker-compose -f .\docker-compose.yml up
+
+### PASSO 3: Executar o serviço com os comandos
+
+> mvn clean install
+> mvn spring-boot:run
 
 ## Acesso à aplicação
 
